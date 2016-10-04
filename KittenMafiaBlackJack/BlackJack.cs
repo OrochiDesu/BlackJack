@@ -1,30 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KittenMafiaBlackJack
 {
     public enum GameState
     {
-        Starting, // should only announce Player/s and Dealer 
-        Shuffling, // shuffles deck
-        Dealing, // dealing cards to player/s and dealer
-        Waiting // waiting for player/s turn to end 
+        Initiate,   // should only announce Player/s and Dealer 
+        Shuffling,  // shuffles deck
+        Dealing,    // dealing cards to player/s and dealer
+        Starting,   // begin game
+        Waiting     // waiting for player/s turn to end 
     }
 
     public class BlackJack
     {
+        const int BlackJackDeal = 2;                                        // only deal two cards for BlackJack
+        const int BlackJackHit = 1;
+
         KittenDeck deck;
         Player player;
+        Dealer dealer;
         GameState currentGameState;
 
         public BlackJack()
         {
             deck = new KittenDeck();
             player = new Player();
-            currentGameState = GameState.Starting;
+            dealer = new Dealer();
+            currentGameState = GameState.Initiate;                          //gamestate will always begin at 'initiate'.
             StartGameLoop();
         }
 
@@ -34,7 +36,7 @@ namespace KittenMafiaBlackJack
             {
                 switch(currentGameState)
                 {
-                    case GameState.Starting:
+                    case GameState.Initiate:
                         if (SetPlayerName())
                             currentGameState = GameState.Shuffling;
                         break;
@@ -43,11 +45,18 @@ namespace KittenMafiaBlackJack
                         currentGameState = GameState.Dealing;
                         break;
                     case GameState.Dealing:
-                        player.DealCardToPlayer(deck.DealCard());
-                        player.DealCardToPlayer(deck.DealCard());
+                        if(player.Hand.Count == 0)
+                        {
+                            player.DealCardToPlayer(deck.DealCard(), BlackJackDeal);
+                        }
+                        else
+                        {
+                            player.DealCardToPlayer(deck.DealCard(), BlackJackHit);
+                        }
                         player.PrintHand();
                         Console.ReadLine();
                         break;
+                    
                 }
             }
         }

@@ -42,23 +42,7 @@ namespace KittenMafiaBlackJack
 
         public KittenDeck()
         {
-            Deck = new List<Card>();    // new list initiated
-
-            var suitCount = Enum.GetNames(typeof(CardSuit)).Length;
-            var valCount = Enum.GetNames(typeof(CardVal)).Length;
-            // new technique using Enum base class to grab the 'typeof' and .length to grab the total of items in the enums
-         
-            for (int i = 0; i < suitCount; i++)         // suits
-            {
-                for (int o = 0; o < valCount; o++)      // face
-                {
-                    Deck.Add(new Card()                 // dont forget... add new card to the list
-                    {
-                        Suit = (CardSuit)i,             // casting conversion
-                        Val = (CardVal)o
-                    });
-                }
-            }
+            ResetDeck();
         }
 
         public void Shuffle(int shuffleCounter = 5000)
@@ -73,9 +57,11 @@ namespace KittenMafiaBlackJack
 
                     var buffer = Deck[rnd];     // assigning buffer(empty card) a random card from deck
                     Deck[rnd] = Deck[card];     // giving the rnd all 56 cards from the deck
-                    Deck[card] = buffer;        // putting buffer back into the deck
+                    Deck[card] = buffer;        // putting buffer[56] back into the deck
                 }
             }
+            Console.WriteLine($"Deck Shuffled... Ready to play BlackJack");
+            Console.ReadLine();
         }
 
         public Card DealCard()      // Returns a Card
@@ -83,6 +69,27 @@ namespace KittenMafiaBlackJack
             var card = Deck[0];     // take the first card from Deck
             Deck.RemoveAt(0);       // remove the card from the top of the list
             return card;            // Give the card you took from Deck
+        }
+
+        public void ResetDeck()
+        {
+            Deck = new List<Card>();    // new list initiated
+
+            var suitCount = Enum.GetNames(typeof(CardSuit)).Length;
+            var valCount = Enum.GetNames(typeof(CardVal)).Length;
+            // new technique using Enum base class to grab the 'typeof' and .length to grab the total of items in the enums
+
+            for (int i = 0; i < suitCount; i++)         // suits
+            {
+                for (int o = 0; o < valCount; o++)      // face
+                {
+                    Deck.Add(new Card()                 // dont forget... add new card to the list
+                    {
+                        Suit = (CardSuit)i,             // casting conversion
+                        Val = (CardVal)o
+                    });
+                }
+            }
         }
     }
 }
