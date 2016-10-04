@@ -22,16 +22,16 @@ namespace KittenMafiaBlackJack
     public class Player
     {
         public string Name { get; set; }
-        public List<Card> Hand { get; set; }
+        public List<Card> Hand { get; set; }                    // empty list for Hand
 
         public Player()
         {
-            Hand = new List<Card>();
+            Hand = new List<Card>();                            // new up the Hand
         }
 
         public void DealCardToPlayer(Card card)
         {
-            Hand.Add(card);           
+            Hand.Add(card);                                     // Add a card from DealCard method in KittenDeck (takes in a card in parethesis, Deal Card returns... a card) 
         }
 
         public void PrintHand()
