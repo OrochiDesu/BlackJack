@@ -1,44 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KittenMafiaBlackJack
 {
     public class Dealer : Player
     {
+        public override List<Card> Hand { get; set; }
         public Dealer()
         {
-
-        }
-
-        public void AnalyseHand()
-        {
-
+            Hand = new List<Card>();
         }
     }
 
     public class Player
     {
         public string Name { get; set; }
-        public List<Card> Hand { get; set; }                    // empty list for Hand
+        public virtual List<Card> Hand { get; set; }                        // empty list for Hand.
 
         public Player()
         {
-            Hand = new List<Card>();                            // new up the Hand
+            Hand = new List<Card>();                                        // new up the Hand
         }
 
-        public void DealCardToPlayer(Card card)
+        public void DealCardsToPlayer(Card[] card)
         {
-            Hand.Add(card);                                     // Add a card from DealCard method in KittenDeck (takes in a card in parethesis, Deal Card returns... a card) 
+            Hand.AddRange(card);
         }
 
         public void PrintHand()
         {
-            foreach (Card i in Hand)
+            Console.WriteLine($"{Name} you caurently have: ");
+            foreach (Card card in Hand)
             {
-                Console.WriteLine($"{i.Val} of {i.Suit}");
+                Console.WriteLine($"{card.Val} of {card.Suit} :: {card.FaceVal}");
             }
         }
     }

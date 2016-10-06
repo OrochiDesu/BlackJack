@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace KittenMafiaBlackJack
 {
@@ -8,7 +9,8 @@ namespace KittenMafiaBlackJack
         Shuffling,  // shuffles deck
         Dealing,    // dealing cards to player/s and dealer
         Starting,   // begin game
-        Waiting     // waiting for player/s turn to end 
+        MainLoop,    // waiting for player/s turn to end
+        EndGame 
     }
 
     public class BlackJack
@@ -45,20 +47,40 @@ namespace KittenMafiaBlackJack
                         currentGameState = GameState.Dealing;
                         break;
                     case GameState.Dealing:
-                        if(player.Hand.Count == 0)
-                        {
-                            player.DealCardToPlayer(deck.DealCard(), BlackJackDeal);
-                        }
-                        else
-                        {
-                            player.DealCardToPlayer(deck.DealCard(), BlackJackHit);
-                        }
-                        player.PrintHand();
-                        Console.ReadLine();
+                        player.DealCardsToPlayer(deck.DealCards(BlackJackDeal));
+                        currentGameState = GameState.Starting;
                         break;
-                    
+                    case GameState.Starting:
+                        player.PrintHand();
+                        currentGameState = GameState.MainLoop;
+                        break;
+                    case GameState.MainLoop:
+                        
                 }
             }
+        }
+
+        private void hitStick()
+        {
+            Console.WriteLine($"{player.Name} would you like to [H]it or [S]tick");
+            var choice = Console.ReadKey();
+            if (choice != null && choice.Key == ConsoleKey.P)
+            {
+
+                Console.WriteLine("moop");
+            }
+            break;
+        }
+
+        private int handCnt()
+        {
+            int handAmount = 0;
+
+            foreach (Card card in player.Hand)
+            {
+                handAmount += card.FaceVal;
+            }
+            return handAmount;
         }
 
         private bool SetPlayerName()

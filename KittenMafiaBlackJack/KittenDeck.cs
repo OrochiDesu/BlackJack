@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace KittenMafiaBlackJack
 {
@@ -64,11 +65,15 @@ namespace KittenMafiaBlackJack
             Console.ReadLine();
         }
 
-        public Card DealCard()      // Returns a Card
+        public Card[] DealCards(int cardCount = 1)      // Returns a Card
         {
-            var card = Deck[0];     // take the first card from Deck
-            Deck.RemoveAt(0);       // remove the card from the top of the list
-            return card;            // Give the card you took from Deck
+            // Currently this method does not perform any validation. 
+            // We need to check if there enough cards left or the game will eventually crash.
+    
+            var cards = Deck.Take(cardCount).ToArray();
+            Deck.RemoveRange(0, cardCount);
+
+            return cards;
         }
 
         public void ResetDeck()
@@ -83,11 +88,16 @@ namespace KittenMafiaBlackJack
             {
                 for (int o = 0; o < valCount; o++)      // face
                 {
-                    Deck.Add(new Card()                 // dont forget... add new card to the list
+                    Deck.Add(new Card()                 // dont forget to... add new card to the list
                     {
                         Suit = (CardSuit)i,             // casting conversion
                         Val = (CardVal)o
                     });
+
+                    if (o <= 8)
+                        Deck[Deck.Count - 1].FaceVal = o + 1;                   // cheeky if statement :: (Count from 0 - first card in the array, if the face value is less than or equal to 8 add 1 to the value)
+                    else
+                        Deck[Deck.Count - 1].FaceVal = 10;                      // else leave it as ten
                 }
             }
         }
