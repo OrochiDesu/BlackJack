@@ -50,7 +50,7 @@ namespace KittenMafiaBlackJack
                         currentGameState = GameState.Starting;
                         break;
                     case GameState.Starting:
-                        Console.WriteLine($"{player.Name} you currently have: \n{player.HandToString()}");
+                        Console.WriteLine($"{player.Name} you currently have: {player.HandToString()}");
                         Console.WriteLine($"{player.Name} would you like to [H]it or [S]tick");
                         currentGameState = GameState.PlayersTurn;
                         break;

@@ -53,7 +53,7 @@ namespace KittenMafiaBlackJack
             var ret = "";                                           // blank string var for +=
             foreach (Card card in Hand)
             {
-                ret = $"{card.Val} of {card.Suit} :: {GetFaceVal(card)}\n";
+                ret += $"{card.Val} of {card.Suit} :: {GetFaceVal(card)}\n";
             }
             return ret;
         }
