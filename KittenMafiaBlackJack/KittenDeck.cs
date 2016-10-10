@@ -88,16 +88,19 @@ namespace KittenMafiaBlackJack
             {
                 for (int o = 0; o < valCount; o++)      // face
                 {
-                    Deck.Add(new Card()                 // dont forget to... add new card to the list
+                    var card = new Card()                 // dont forget to... add new card to the list
                     {
                         Suit = (CardSuit)i,             // casting conversion
-                        Val = (CardVal)o
-                    });
+                        Val = (CardVal)o,
+                        FaceVal = o + 1 > 10 ? 10 : o + 1
+                    };
 
-                    if (o <= 8)
-                        Deck[Deck.Count - 1].FaceVal = o + 1;                   // cheeky if statement :: (Count from 0 - first card in the array, if the face value is less than or equal to 8 add 1 to the value)
-                    else
-                        Deck[Deck.Count - 1].FaceVal = 10;                      // else leave it as ten
+                    Deck.Add(card);
+
+                    //if (o <= 8)
+                    //    Deck[Deck.Count - 1].FaceVal = o <= o + 1;                   // cheeky if statement :: (Count from 0 - first card in the array, if the face value is less than or equal to 8 add 1 to the value)
+                    //else
+                    //    Deck[Deck.Count - 1].FaceVal = 10;                      // else leave it as ten
                 }
             }
         }

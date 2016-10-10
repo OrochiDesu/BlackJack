@@ -29,11 +29,12 @@ namespace KittenMafiaBlackJack
 
         public void PrintHand()
         {
-            Console.WriteLine($"{Name} you caurently have: ");
+            Console.WriteLine($"{Name} you currently have: ");
             foreach (Card card in Hand)
             {
                 Console.WriteLine($"{card.Val} of {card.Suit} :: {card.FaceVal}");
             }
+            Console.Read();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace KittenMafiaBlackJack
         Shuffling,  // shuffles deck
         Dealing,    // dealing cards to player/s and dealer
         Starting,   // begin game
-        MainLoop,    // waiting for player/s turn to end
+        PlayersTurn,    // waiting for player/s turn to end
         EndGame 
     }
 
@@ -52,27 +52,67 @@ namespace KittenMafiaBlackJack
                         break;
                     case GameState.Starting:
                         player.PrintHand();
-                        currentGameState = GameState.MainLoop;
+                        Console.WriteLine($"{player.Name} would you like to [H]it or [S]tick");
+                        currentGameState = GameState.PlayersTurn;
                         break;
-                    case GameState.MainLoop:
+                    case GameState.PlayersTurn:
+                        ProcessPlayersTurn();
+                        break;
                         
                 }
             }
         }
 
-        private void hitStick()
+        private void ProcessPlayersTurn()
         {
-            Console.WriteLine($"{player.Name} would you like to [H]it or [S]tick");
-            var choice = Console.ReadKey();
-            if (choice != null && choice.Key == ConsoleKey.P)
+            switch (GetInputString())
             {
-
-                Console.WriteLine("moop");
+                case "H":
+                    ProcessHit();
+                    break;
+                case "S":
+                    ProcessStick();
+                    break;
             }
-            break;
         }
 
-        private int handCnt()
+        private string GetInputString()
+        {
+            var choice = Console.ReadKey();
+
+            return choice != null
+                ? choice.Key.ToString().ToUpper()
+                : null;
+        }
+
+        private void ProcessHit()
+        {
+            player.DealCardsToPlayer(deck.DealCards(BlackJackHit));
+            player.PrintHand();
+            if (HandCnt() > 21)
+                ProcessStick();
+        }
+
+        private void ProcessStick()
+        {
+            if (HandCnt() < 21)
+            {
+                Console.WriteLine($"{player.Name} you have {HandCnt()}, GG");
+                Console.ReadLine();
+            }
+            else if (HandCnt() > 21)
+            {
+                Console.WriteLine($"Bust {player.Name} you lose");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine($"you have {HandCnt()}, You win!");
+                Console.ReadLine();
+            }
+        }
+
+        private int HandCnt()
         {
             int handAmount = 0;
 
@@ -88,6 +128,16 @@ namespace KittenMafiaBlackJack
             Console.WriteLine("\nPlease enter your name");
             player.Name = Console.ReadLine().ToLower();            
             return !string.IsNullOrEmpty(player.Name);
+        }
+
+        private int[] GetCardValue(Card card)
+        {
+            var cardVal = (int)card.Val + 1;
+            return cardVal > 10
+                ? new[] { 10 }
+                : cardVal == 1
+                    ? new[] { 1, 11 }
+                    : new[] { cardVal };
         }
     }
 }
