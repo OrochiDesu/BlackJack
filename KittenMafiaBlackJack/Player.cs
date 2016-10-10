@@ -1,40 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace KittenMafiaBlackJack
 {
-    public class Dealer : Player
+    public class BlackJackDealer : BlackJackPlayer
     {
-        public override List<Card> Hand { get; set; }
-        public Dealer()
+        public BlackJackDealer()
         {
-            Hand = new List<Card>();
         }
     }
 
-    public class Player
+    public abstract class Player
     {
         public string Name { get; set; }
-        public virtual List<Card> Hand { get; set; }                        // empty list for Hand.
+        public List<Card> Hand { get; set; }                                // empty list for Hand.
 
         public Player()
         {
             Hand = new List<Card>();                                        // new up the Hand
         }
 
-        public void DealCardsToPlayer(Card[] card)
+        public abstract int HandCount();
+        public abstract int GetFaceVal(Card card);
+        public abstract string HandToString();
+
+        public virtual void DealCardsToPlayer(Card[] card)
         {
             Hand.AddRange(card);
         }
+    }
 
-        public void PrintHand()
+    public class BlackJackPlayer : Player                           
+    {
+        public override int HandCount()                             // moved handcount into blackjack player as faceval is blackjack specific
         {
-            Console.WriteLine($"{Name} you currently have: ");
+            int handAmount = 0;
+
             foreach (Card card in Hand)
             {
-                Console.WriteLine($"{card.Val} of {card.Suit} :: {card.FaceVal}");
+                handAmount += GetFaceVal(card);                     
             }
-            Console.Read();
+            return handAmount;
+        }
+
+        public override int GetFaceVal(Card card)
+        {
+            var cardVal = (int)card.Val + 1;                        // +1 to card value as it starts count @ 0
+            return cardVal > 10 ? 10 : cardVal;                     // if card value is over 10 in count it equals 10 (Jack, Queen, King) else its normal 
+        }
+
+        public override string HandToString()
+        {
+            var ret = "";                                           // blank string var for +=
+            foreach (Card card in Hand)
+            {
+                ret = $"{card.Val} of {card.Suit} :: {GetFaceVal(card)}\n";
+            }
+            return ret;
         }
     }
+
+
 }

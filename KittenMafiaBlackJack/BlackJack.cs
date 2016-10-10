@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace KittenMafiaBlackJack
 {
@@ -10,24 +9,24 @@ namespace KittenMafiaBlackJack
         Dealing,    // dealing cards to player/s and dealer
         Starting,   // begin game
         PlayersTurn,    // waiting for player/s turn to end
-        EndGame 
+        DealersTurn     
     }
 
     public class BlackJack
     {
         const int BlackJackDeal = 2;                                        // only deal two cards for BlackJack
-        const int BlackJackHit = 1;
+        const int BlackJackHit = 1;                                         // hit for one card
 
         KittenDeck deck;
         Player player;
-        Dealer dealer;
+        BlackJackDealer dealer;
         GameState currentGameState;
 
         public BlackJack()
         {
             deck = new KittenDeck();
-            player = new Player();
-            dealer = new Dealer();
+            player = new BlackJackPlayer();
+            dealer = new BlackJackDealer();
             currentGameState = GameState.Initiate;                          //gamestate will always begin at 'initiate'.
             StartGameLoop();
         }
@@ -51,14 +50,13 @@ namespace KittenMafiaBlackJack
                         currentGameState = GameState.Starting;
                         break;
                     case GameState.Starting:
-                        player.PrintHand();
+                        Console.WriteLine($"{player.Name} you currently have: \n{player.HandToString()}");
                         Console.WriteLine($"{player.Name} would you like to [H]it or [S]tick");
                         currentGameState = GameState.PlayersTurn;
                         break;
                     case GameState.PlayersTurn:
                         ProcessPlayersTurn();
-                        break;
-                        
+                        break;                        
                 }
             }
         }
@@ -88,40 +86,29 @@ namespace KittenMafiaBlackJack
         private void ProcessHit()
         {
             player.DealCardsToPlayer(deck.DealCards(BlackJackHit));
-            player.PrintHand();
-            if (HandCnt() > 21)
+            Console.WriteLine(player.HandToString());
+            if (player.HandCount() > 21)
                 ProcessStick();
         }
 
         private void ProcessStick()
         {
-            if (HandCnt() < 21)
+            if (player.HandCount() < 21)
             {
-                Console.WriteLine($"{player.Name} you have {HandCnt()}, GG");
+                Console.WriteLine($"/n{player.Name} you have {player.HandCount()}, GG");
                 Console.ReadLine();
             }
-            else if (HandCnt() > 21)
+            else if (player.HandCount() > 21)
             {
-                Console.WriteLine($"Bust {player.Name} you lose");
+                Console.WriteLine($"/nBust {player.Name} you lose");
                 Console.ReadLine();
             }
             else
             {
-                Console.WriteLine($"you have {HandCnt()}, You win!");
+                Console.WriteLine($"/nYou have {player.HandCount()}, You win!");
                 Console.ReadLine();
             }
-        }
-
-        private int HandCnt()
-        {
-            int handAmount = 0;
-
-            foreach (Card card in player.Hand)
-            {
-                handAmount += card.FaceVal;
-            }
-            return handAmount;
-        }
+        }        
 
         private bool SetPlayerName()
         {

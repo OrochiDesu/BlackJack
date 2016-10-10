@@ -1,5 +1,4 @@
-﻿
-namespace KittenMafiaBlackJack
+﻿namespace KittenMafiaBlackJack
 {
     class Program
     {

@@ -34,7 +34,6 @@ namespace KittenMafiaBlackJack
     {
         public CardSuit Suit;
         public CardVal Val;
-        public int FaceVal{ get; set; }
     }
 
     public class KittenDeck
@@ -84,23 +83,17 @@ namespace KittenMafiaBlackJack
             var valCount = Enum.GetNames(typeof(CardVal)).Length;
             // new technique using Enum base class to grab the 'typeof' and .length to grab the total of items in the enums
 
-            for (int i = 0; i < suitCount; i++)         // suits
+            for (int i = 0; i < suitCount; i++)             // suits
             {
-                for (int o = 0; o < valCount; o++)      // face
+                for (int o = 0; o < valCount; o++)          // face
                 {
-                    var card = new Card()                 // dont forget to... add new card to the list
+                    var card = new Card()                   // dont forget to... add new card to the list
                     {
-                        Suit = (CardSuit)i,             // casting conversion
-                        Val = (CardVal)o,
-                        FaceVal = o + 1 > 10 ? 10 : o + 1
+                        Suit = (CardSuit)i,                 // casting conversion
+                        Val = (CardVal)o                        
                     };
 
                     Deck.Add(card);
-
-                    //if (o <= 8)
-                    //    Deck[Deck.Count - 1].FaceVal = o <= o + 1;                   // cheeky if statement :: (Count from 0 - first card in the array, if the face value is less than or equal to 8 add 1 to the value)
-                    //else
-                    //    Deck[Deck.Count - 1].FaceVal = 10;                      // else leave it as ten
                 }
             }
         }
