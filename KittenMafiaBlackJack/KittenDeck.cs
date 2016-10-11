@@ -64,11 +64,10 @@ namespace KittenMafiaBlackJack
             Console.ReadLine();
         }
 
-        public Card[] DealCards(int cardCount = 1)      // Returns a Card
+        public Card[] DealCards(int cardCount)      // Returns a Card
         {
             // Currently this method does not perform any validation. 
             // We need to check if there enough cards left or the game will eventually crash.
-    
             var cards = Deck.Take(cardCount).ToArray();
             Deck.RemoveRange(0, cardCount);
 

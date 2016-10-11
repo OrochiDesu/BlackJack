@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace KittenMafiaBlackJack
 {
@@ -6,6 +7,15 @@ namespace KittenMafiaBlackJack
     {
         public BlackJackDealer()
         {
+        }
+
+        public string PreviewHand()
+        {
+            string retVal = Hand.First().Val.ToString();
+            string retSuit = Hand.First().Suit.ToString();
+            var retAmount = GetFaceVal(Hand.First());
+
+            return retVal + " of " + retSuit + " :: " +  retAmount;
         }
     }
 
