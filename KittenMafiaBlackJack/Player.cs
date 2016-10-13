@@ -15,7 +15,7 @@ namespace KittenMafiaBlackJack
             string retSuit = Hand.First().Suit.ToString();
             var retAmount = GetFaceVal(Hand.First());
 
-            return retVal + " of " + retSuit + " :: " +  retAmount;
+            return retVal + " of " + retSuit + " :: " +  retAmount + ", and a face down\n";
         }
     }
 

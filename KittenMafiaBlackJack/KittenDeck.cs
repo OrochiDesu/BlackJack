@@ -45,35 +45,6 @@ namespace KittenMafiaBlackJack
             ResetDeck();
         }
 
-        public void Shuffle(int shuffleCounter = 5000)
-        {
-            Random rcg = new Random();
-
-            for (int i = 0; i < shuffleCounter; i++)            // while this loop is less than 5000(ShuffleCounter) do the next 'for'
-            {
-                for (int card = 0; card < Deck.Count; card++)   // for each card in the deck(Deck.Count) 
-                {
-                    var rnd = rcg.Next(Deck.Count);             // Next for random usage. From deck.
-
-                    var buffer = Deck[rnd];     // assigning buffer(empty card) a random card from deck
-                    Deck[rnd] = Deck[card];     // giving the rnd all 56 cards from the deck
-                    Deck[card] = buffer;        // putting buffer[56] back into the deck
-                }
-            }
-            Console.WriteLine($"Deck Shuffled... Ready to play BlackJack");
-            Console.ReadLine();
-        }
-
-        public Card[] DealCards(int cardCount)      // Returns a Card
-        {
-            // Currently this method does not perform any validation. 
-            // We need to check if there enough cards left or the game will eventually crash.
-            var cards = Deck.Take(cardCount).ToArray();
-            Deck.RemoveRange(0, cardCount);
-
-            return cards;
-        }
-
         public void ResetDeck()
         {
             Deck = new List<Card>();    // new list initiated
@@ -89,12 +60,39 @@ namespace KittenMafiaBlackJack
                     var card = new Card()                   // dont forget to... add new card to the list
                     {
                         Suit = (CardSuit)i,                 // casting conversion
-                        Val = (CardVal)o                        
+                        Val = (CardVal)o
                     };
 
                     Deck.Add(card);
                 }
             }
+        }
+
+        public void Shuffle(int shuffleCounter = 5000)
+        {
+            Random rcg = new Random();
+
+            for (int i = 0; i < shuffleCounter; i++)            // while this loop is less than 5000(ShuffleCounter) do the next 'for'
+            {
+                for (int card = 0; card < Deck.Count; card++)   // for each card in the deck(Deck.Count) 
+                {
+                    var rnd = rcg.Next(Deck.Count);             // Next for random usage. From deck.
+
+                    var buffer = Deck[rnd];     // assigning buffer(empty card) a random card from deck
+                    Deck[rnd] = Deck[card];     // giving the rnd all 56 cards from the deck
+                    Deck[card] = buffer;        // putting buffer[56] back into the deck
+                }
+            }
+        }
+
+        public Card[] DealCards(int cardCount)      // Returns a Card
+        {
+            // Currently this method does not perform any validation. 
+            // We need to check if there enough cards left or the game will eventually crash.
+            var cards = Deck.Take(cardCount).ToArray();
+            Deck.RemoveRange(0, cardCount);
+
+            return cards;
         }
     }
 }

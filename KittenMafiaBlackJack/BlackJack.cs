@@ -9,7 +9,8 @@ namespace KittenMafiaBlackJack
         Dealing,    // dealing cards to player/s and dealer
         Starting,   // begin game
         PlayersTurn,    // waiting for player/s turn to end
-        DealersTurn     
+        DealersTurn,
+        Ending     
     }
 
     public class BlackJack
@@ -43,6 +44,7 @@ namespace KittenMafiaBlackJack
                         break;
                     case GameState.Shuffling:
                         deck.Shuffle();
+                        Console.WriteLine("Deck Shuffled... Ready to play BlackJack");
                         currentGameState = GameState.Dealing;
                         break;
                     case GameState.Dealing:
@@ -52,14 +54,18 @@ namespace KittenMafiaBlackJack
                         break;
                     case GameState.Starting:
                         Console.WriteLine($"{player.Name} you currently have: {player.HandToString()}");
-                        Console.WriteLine($"Dealer Has {dealer.PreviewHand()}, and a face down");
+                        Console.WriteLine($"Dealer Has {dealer.PreviewHand()}");
                         Console.WriteLine($"{player.Name} would you like to [H]it or [S]tick");
                         currentGameState = GameState.PlayersTurn;
                         break;
                     case GameState.PlayersTurn:
                         ProcessPlayersTurn();
                         ProcessDealersTurn();
-                        break;               
+                        currentGameState = GameState.Ending;
+                        break;
+                    case GameState.Ending:
+                        break;
+            
                 }
             }
         }
@@ -75,11 +81,12 @@ namespace KittenMafiaBlackJack
 
         private void ProcessDealersTurn()
         {
-            if (dealer.HandCount() < 17)
+            if (player.HandCount() > 21)
+                ProcessStick();
+            else if (player.HandCount() < 21 && dealer.HandCount() < 17)
             {
                 dealer.DealCardsToPlayer(deck.DealCards(BlackJackHit));
-                Console.WriteLine("dealer hits!\n\n press enter");
-                Console.Read();
+                Console.WriteLine("dealer hits!\nPress Enter");
                 Console.WriteLine($"{dealer.HandToString()}");
                 ProcessDealersTurn();
             }
@@ -108,31 +115,30 @@ namespace KittenMafiaBlackJack
         private void ProcessHit()
         {
             player.DealCardsToPlayer(deck.DealCards(BlackJackHit));
+            Console.WriteLine($"\nPlayer you have {player.HandCount()}");
             if (player.HandCount() < 21)
-                currentGameState = GameState.Starting;
-            else
+            {
+                Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
+                ProcessPlayersTurn();
+            }
+            else if (player.HandCount() > 21)
+            {
                 ProcessStick();
+            }
         }
 
         private void ProcessStick()
         {
             if (player.HandCount() > 21)
             {
-                Console.WriteLine($"/nPlayer you have {player.HandCount()}");
-                Console.WriteLine($"Dealer has {dealer.HandCount()}");
-
-                if (player.HandCount() < dealer.HandCount())
-                    Console.WriteLine("house wins!");
-                else
-                    Console.WriteLine("you win!");
-                Console.ReadLine();
+                Console.WriteLine($"Bust {player.Name} you lose");
             }
-            else if (player.HandCount() > 21)
+            else if (player.HandCount() < 21)
             {
-                Console.WriteLine($"\nBust {player.Name} you lose");
-                Console.ReadLine();
+                Console.WriteLine($"\nPlayer you have {player.HandCount()}");
+                Console.WriteLine($"Dealer has {dealer.HandCount()}");
             }
-        }        
+        }   
 
         private bool SetPlayerName()
         {

@@ -1,0 +1,8 @@
+C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack\BlackJack_Tests\bin\Debug\BlackJack_Tests.dll
+C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack\BlackJack_Tests\bin\Debug\BlackJack_Tests.pdb
+C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack\BlackJack_Tests\bin\Debug\KittenMafiaBlackJack.exe
+C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack\BlackJack_Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack\BlackJack_Tests\bin\Debug\KittenMafiaBlackJack.pdb
+C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack\BlackJack_Tests\obj\Debug\BlackJack_Tests.csprojResolveAssemblyReference.cache
+C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack\BlackJack_Tests\obj\Debug\BlackJack_Tests.dll
+C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack\BlackJack_Tests\obj\Debug\BlackJack_Tests.pdb
