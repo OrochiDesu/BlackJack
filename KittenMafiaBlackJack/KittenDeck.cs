@@ -27,7 +27,6 @@ namespace KittenMafiaBlackJack
         King,
         Queen,
         Jack,
-        Kitten,     // wildcard
     }
 
     public class Card                   // what constitutes a card...
