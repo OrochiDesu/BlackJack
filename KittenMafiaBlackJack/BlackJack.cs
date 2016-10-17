@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace KittenMafiaBlackJack
 {
@@ -40,7 +41,16 @@ namespace KittenMafiaBlackJack
                 {
                     case GameState.Initiate:
                         if (SetPlayerName())
+                        {
+                            Console.WriteLine("Please press the return key...");
+                            Console.Read();
+                            if (player.Name == "ash")
+                            {
+                                Environment.Exit(0);
+                            }
                             currentGameState = GameState.Shuffling;
+                        }
+
                         break;
                     case GameState.Shuffling:
                         deck.Shuffle();
@@ -147,7 +157,12 @@ namespace KittenMafiaBlackJack
         private bool SetPlayerName()
         {
             Console.WriteLine("\nPlease enter your name");
-            player.Name = Console.ReadLine().ToLower();            
+            player.Name = Console.ReadLine().ToLower();   
+            if(player.Name == "ash")
+            {
+                Console.WriteLine("o rlly? lets play pokemon");
+                Process.Start("http://emulator.online/gameboy/pokemon-red-version/");
+            }         
             return !string.IsNullOrEmpty(player.Name);
         }
 
