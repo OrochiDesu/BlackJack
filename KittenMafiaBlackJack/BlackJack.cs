@@ -118,7 +118,6 @@ namespace KittenMafiaBlackJack
             Console.WriteLine($"\nPlayer you have {player.HandCount()}");
             if (player.HandCount() < 21)
             {
-                Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
                 ProcessPlayersTurn();
             }
             else if (player.HandCount() > 21)
