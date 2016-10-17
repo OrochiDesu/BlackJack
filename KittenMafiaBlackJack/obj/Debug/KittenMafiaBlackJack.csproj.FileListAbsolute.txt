@@ -4,3 +4,9 @@ C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack
 C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.csprojResolveAssemblyReference.cache
 C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.exe
 C:\Users\ashley.henry\documents\visual studio 2015\Projects\KittenMafiaBlackJack\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.pdb
+C:\Users\ashley.henry\Documents\BlackJack\KittenMafiaBlackJack\bin\Debug\KittenMafiaBlackJack.exe.config
+C:\Users\ashley.henry\Documents\BlackJack\KittenMafiaBlackJack\bin\Debug\KittenMafiaBlackJack.exe
+C:\Users\ashley.henry\Documents\BlackJack\KittenMafiaBlackJack\bin\Debug\KittenMafiaBlackJack.pdb
+C:\Users\ashley.henry\Documents\BlackJack\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.csprojResolveAssemblyReference.cache
+C:\Users\ashley.henry\Documents\BlackJack\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.exe
+C:\Users\ashley.henry\Documents\BlackJack\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.pdb

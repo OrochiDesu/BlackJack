@@ -60,7 +60,13 @@ namespace KittenMafiaBlackJack
                         break;
                     case GameState.PlayersTurn:
                         ProcessPlayersTurn();
+                        if (dealer.HandCount() < 17)
+                        {
+                            Console.WriteLine("dealer hits!");
+                            Console.Read();
+                        }
                         ProcessDealersTurn();
+                        Console.WriteLine($"dealer has {dealer.HandToString()}");
                         currentGameState = GameState.Ending;
                         break;
                     case GameState.Ending:
@@ -86,8 +92,6 @@ namespace KittenMafiaBlackJack
             else if (player.HandCount() < 21 && dealer.HandCount() < 17)
             {
                 dealer.DealCardsToPlayer(deck.DealCards(BlackJackHit));
-                Console.WriteLine("dealer hits!\nPress Enter");
-                Console.WriteLine($"{dealer.HandToString()}");
                 ProcessDealersTurn();
             }
             else
@@ -136,7 +140,7 @@ namespace KittenMafiaBlackJack
             else if (player.HandCount() < 21)
             {
                 Console.WriteLine($"\nPlayer you have {player.HandCount()}");
-                Console.WriteLine($"Dealer has {dealer.HandCount()}");
+                Console.WriteLine($"Dealer has {dealer.HandToString()}");
             }
         }   
 
