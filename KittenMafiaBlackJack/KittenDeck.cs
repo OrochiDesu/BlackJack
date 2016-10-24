@@ -11,7 +11,6 @@ namespace KittenMafiaBlackJack
         spades,
         clubs,
     }
-
     public enum CardVal
     {
         Ace,
@@ -29,13 +28,11 @@ namespace KittenMafiaBlackJack
         Jack,
         Kitten      //wildcard
     }
-
     public class Card                   // what constitutes a card...
     {
         public CardSuit Suit;
         public CardVal Val;
     }
-
     public class KittenDeck
     {
         public List<Card> Deck;         // using a list for KittenDeck built from my card class.
@@ -44,7 +41,6 @@ namespace KittenMafiaBlackJack
         {
             ResetDeck();
         }
-
         public void ResetDeck()
         {
             Deck = new List<Card>();    // new list initiated
@@ -67,7 +63,6 @@ namespace KittenMafiaBlackJack
                 }
             }
         }
-
         public void Shuffle(int shuffleCounter = 5000)
         {
             Random rcg = new Random();
@@ -84,8 +79,7 @@ namespace KittenMafiaBlackJack
                 }
             }
         }
-
-        public Card[] DealCards(int cardCount)      // Returns a Card
+        public Card[] DealAmount(int cardCount)      // Returns a Card
         {
             // Currently this method does not perform any validation. 
             // We need to check if there enough cards left or the game will eventually crash.

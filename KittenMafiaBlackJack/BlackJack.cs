@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace KittenMafiaBlackJack
 {
     public enum GameState
     {
+
         Initiate,   // should only announce Player/s and Dealer 
         Shuffling,  // shuffles deck
         Dealing,    // dealing cards to player/s and dealer
@@ -40,52 +42,74 @@ namespace KittenMafiaBlackJack
                 switch(currentGameState)
                 {
                     case GameState.Initiate:
-                        if (SetPlayerName())
-                        {
-                            Console.WriteLine("Please press the return key...");
-                            Console.Read();
-                            if (player.Name == "ash")
-                            {
-                                Environment.Exit(0);
-                            }
-                            currentGameState = GameState.Shuffling;
-                        }
-
+                        Console.WriteLine("\nPlease enter your name");
+                        SetPlayerName();
+                        Console.WriteLine($"{player.Name} please press the return key...");
+                        Console.ReadLine();
+                        currentGameState = GameState.Shuffling;
                         break;
                     case GameState.Shuffling:
+                        Console.WriteLine("Everyday I'm shuffling");
                         deck.Shuffle();
-                        Console.WriteLine("Deck Shuffled... Ready to play BlackJack");
                         currentGameState = GameState.Dealing;
                         break;
                     case GameState.Dealing:
-                        dealer.DealCardsToPlayer(deck.DealCards(BlackJackDeal));
-                        player.DealCardsToPlayer(deck.DealCards(BlackJackDeal));
+                        Console.WriteLine("Top deals, being dealt...");
+                        dealer.DealCardsToPlayer(deck.DealAmount(BlackJackDeal));
+                        player.DealCardsToPlayer(deck.DealAmount(BlackJackDeal));
                         currentGameState = GameState.Starting;
                         break;
                     case GameState.Starting:
-                        Console.WriteLine($"{player.Name} you currently have: {player.HandToString()}");
-                        Console.WriteLine($"Dealer Has {dealer.PreviewHand()}");
-                        Console.WriteLine($"{player.Name} would you like to [H]it or [S]tick");
+                        StartGame();
                         currentGameState = GameState.PlayersTurn;
                         break;
                     case GameState.PlayersTurn:
-                        ProcessPlayersTurn();
-                        if (dealer.HandCount() < 17)
-                        {
-                            Console.WriteLine("dealer hits!");
-                            Console.Read();
-                        }
+                        ReadPlayerTurn();
+                        currentGameState = GameState.DealersTurn;
+                        break;
+                    case GameState.DealersTurn:
                         ProcessDealersTurn();
-                        Console.WriteLine($"dealer has {dealer.HandToString()}");
                         currentGameState = GameState.Ending;
                         break;
                     case GameState.Ending:
+                        Console.WriteLine(CompareHands());
+                        RestartGame();
                         break;
-            
                 }
             }
         }
 
+        private bool SetPlayerName()
+        {
+            player.Name = Console.ReadLine().ToLower();
+            if (player.Name == "ash")
+            {
+                RunPkmn();
+                Program.Exit();
+            }
+                return !string.IsNullOrEmpty(player.Name);
+        }
+        private void RunPkmn()
+        {
+            Console.WriteLine("oh really? lets play pokemon");
+            Process.Start("http://emulator.online/gameboy/pokemon-red-version/");
+        }
+        private void StartGame()
+        {
+            Console.WriteLine($"{player.Name} you currently have:\n{player.HandToString()}\nDealer Has {dealer.PreviewHand()}\n{player.Name} would you like to [H]it or [S]tick?");
+        }
+        private void ReadPlayerTurn()
+        {
+            switch (GetInputString())
+            {
+                case "H":
+                    ProcessHit();
+                    break;
+                case "S":
+                    EndPlayerTurn();
+                    break;
+            }
+        }
         public string GetInputString()
         {
             var choice = Console.ReadKey();
@@ -94,78 +118,92 @@ namespace KittenMafiaBlackJack
                 ? choice.Key.ToString().ToUpper()
                 : null;
         }
-
         private void ProcessDealersTurn()
         {
-            if (player.HandCount() > 21)
-                ProcessStick();
-            else if (player.HandCount() < 21 && dealer.HandCount() < 17)
+            if (dealer.HandCount() < 17)
             {
-                dealer.DealCardsToPlayer(deck.DealCards(BlackJackHit));
+                Console.WriteLine("dealer hits!");
+                dealer.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
                 ProcessDealersTurn();
             }
-            else
-            {
-                ProcessStick();
-            }
-
         }
-
-        private void ProcessPlayersTurn()
-        {
-            switch (GetInputString())
-            {
-                case "H":
-                    ProcessHit();
-                    break;
-                case "S":
-                    ProcessStick();
-                    break;
-            }
-        }
-
-
-
         private void ProcessHit()
         {
-            player.DealCardsToPlayer(deck.DealCards(BlackJackHit));
-            Console.WriteLine($"\nPlayer you have {player.HandCount()}");
-            if (player.HandCount() < 21)
-            {
-                Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
-                ProcessPlayersTurn();
-            }
-            else if (player.HandCount() > 21)
-            {
-                ProcessStick();
-            }
-        }
-
-        private void ProcessStick()
-        {
+            player.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
+            checkForSpecial();
+            Console.WriteLine($"\n{player.Name} you have {player.HandCount()}");
+            Console.WriteLine(player.HandToString());
             if (player.HandCount() > 21)
             {
-                Console.WriteLine($"Bust {player.Name} you lose");
+                GameOver();
+                currentGameState = GameState.Ending;
             }
             else if (player.HandCount() < 21)
             {
-                Console.WriteLine($"\nPlayer you have {player.HandCount()}");
-                Console.WriteLine($"Dealer has {dealer.HandToString()}");
+                Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
+                ReadPlayerTurn();
             }
-        }   
-
-        private bool SetPlayerName()
-        {
-            Console.WriteLine("\nPlease enter your name");
-            player.Name = Console.ReadLine().ToLower();   
-            if(player.Name == "ash")
-            {
-                Console.WriteLine("o rlly? lets play pokemon");
-                Process.Start("http://emulator.online/gameboy/pokemon-red-version/");
-            }         
-            return !string.IsNullOrEmpty(player.Name);
         }
-
+        private void checkForSpecial()
+        {
+            bool containsAce = player.Hand.Any(Card => Card.Val == CardVal.Ace);
+            bool containsKitten = player.Hand.Any(Card => Card.Val == CardVal.Kitten);
+        }
+        private string GameOver()
+        {
+            return $"game over {player.Name}"
+                + $"you have {player.HandToString()}"
+                + player.HandCount();
+        }
+        private void ProcessStick()
+        {
+            EndPlayerTurn();
+            currentGameState = GameState.DealersTurn;
+        }
+        private string EndPlayerTurn()
+        {
+            return $"{player.Name} you currently have: {player.HandToString()}"
+                + $"\n{player.HandCount()}"
+                + "\nDealers Turn";
+        }
+        private string CompareHands()
+        {
+            var retMsg = "";
+            if (dealer.HandCount() > player.HandCount())
+            {
+                retMsg = $"\n{player.Name} you have {player.HandToString()}"
+                            + $"\n{player.HandCount()}"
+                            + $"\n\nDealer has {dealer.HandToString()}"
+                            + $"\n{dealer.HandCount()}"
+                            + $"\nYou lose {player.Name}"
+                            + "Try Again? [Y]es, [N]o";
+            }
+            else if (player.HandCount() > dealer.HandCount())
+            {
+                retMsg = $"\n{player.Name} you have {player.HandToString()}"
+                            + $"\n{player.HandCount()}"
+                            + $"\n\nDealer has {dealer.HandToString()}"
+                            + $"\n{dealer.HandCount()}"
+                            + $"\nYou win {player.Name}!"
+                            + "Play Again? [Y]es, [N]o";
+            }
+            return retMsg;
+        }
+        private void RestartGame()
+        {
+            switch (GetInputString())
+            {
+                case "Y":
+                    deck.ResetDeck();
+                    player.Hand.Clear();
+                    dealer.Hand.Clear();
+                    currentGameState = GameState.Shuffling;
+                    break;
+                case "N":
+                    Program.Exit();
+                    break;
+            }
+        }
         private int[] GetCardValue(Card card)
         {
             var cardVal = (int)card.Val + 1;

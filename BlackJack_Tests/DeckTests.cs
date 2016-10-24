@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using KittenMafiaBlackJack;
 
 namespace BlackJack_Tests
@@ -36,12 +35,12 @@ namespace BlackJack_Tests
             var hand2 = new BlackJackPlayer();
 
             testDeck1.Shuffle();
-            hand1.DealCardsToPlayer(testDeck1.DealCards(56));
+            hand1.DealCardsToPlayer(testDeck1.DealAmount(56));
 
             testDeck1.ResetDeck();
 
             testDeck1.Shuffle();
-            hand2.DealCardsToPlayer(testDeck1.DealCards(56));
+            hand2.DealCardsToPlayer(testDeck1.DealAmount(56));
 
             var matches = 0;
 

@@ -8,7 +8,6 @@ namespace KittenMafiaBlackJack
         public BlackJackDealer()
         {
         }
-
         public string PreviewHand()
         {
             string retVal = Hand.First().Val.ToString();
@@ -24,15 +23,15 @@ namespace KittenMafiaBlackJack
         public string Name { get; set; }
         public List<Card> Hand { get; set; }                                // empty list for Hand.
 
-        public Player()
-        {
-            Hand = new List<Card>();                                        // new up the Hand
-        }
-
         public abstract int HandCount();
         public abstract int GetFaceVal(Card card);
         public abstract string HandToString();
 
+        public Player()
+        {
+            Hand = new List<Card>();                                        // new up the Hand
+        }
+ 
         public virtual void DealCardsToPlayer(Card[] card)
         {
             Hand.AddRange(card);
@@ -51,13 +50,11 @@ namespace KittenMafiaBlackJack
             }
             return handAmount;
         }
-
         public override int GetFaceVal(Card card)
         {
             var cardVal = (int)card.Val + 1;                        // +1 to card value as it starts count @ 0
             return cardVal > 10 ? 10 : cardVal;                     // if card value is over 10 in count it equals 10 (Jack, Queen, King) else its normal 
         }
-
         public override string HandToString()
         {
             var ret = "";                                           // blank string var for +=
