@@ -98,6 +98,25 @@ namespace KittenMafiaBlackJack
         {
             Console.WriteLine($"{player.Name} you currently have:\n{player.HandToString()}\nDealer Has {dealer.PreviewHand()}\n{player.Name} would you like to [H]it or [S]tick?");
         }
+        private void checkForSpecial()
+        {
+            bool containsAce = player.Hand.Any(Card => Card.Val == CardVal.Ace);
+            bool containsKitten = player.Hand.Any(Card => Card.Val == CardVal.Kitten);
+
+            if (containsAce)
+            {
+                Console.WriteLine($"{player.Name} would you like your ace to be [a]-1 or [b]-11");
+                var decision = GetInputString();
+
+                switch (decision)
+                {
+                    case "a":
+                        
+                    default:
+                        break;
+                }
+            }
+        }
         private void ReadPlayerTurn()
         {
             switch (GetInputString())
@@ -143,11 +162,6 @@ namespace KittenMafiaBlackJack
                 Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
                 ReadPlayerTurn();
             }
-        }
-        private void checkForSpecial()
-        {
-            bool containsAce = player.Hand.Any(Card => Card.Val == CardVal.Ace);
-            bool containsKitten = player.Hand.Any(Card => Card.Val == CardVal.Kitten);
         }
         private string GameOver()
         {

@@ -4,7 +4,7 @@ using KittenMafiaBlackJack;
 namespace BlackJack_Tests
 {
     [TestClass]
-    public class BlackJackTests
+    public class DeckTests
     {
         [TestMethod]
         public void ShuffleTest()
@@ -27,7 +27,6 @@ namespace BlackJack_Tests
 
             Assert.IsTrue(matches < TestDeck1.Deck.Count * 0.8, "Decks do not differ and shuffle may need to be revamped");
         }
-
         public void ResetShuffleTest()
         {
             var testDeck1 = new KittenDeck();
