@@ -44,19 +44,22 @@ namespace KittenMafiaBlackJack
                     case GameState.Initiate:
                         Console.WriteLine("\nPlease enter your name");
                         SetPlayerName();
-                        Console.WriteLine($"{player.Name} please press the return key...");
+                        Console.WriteLine($"{player.Name} I'm ready to play Kitten BlackJack! please press the return key...");
                         Console.ReadLine();
                         currentGameState = GameState.Shuffling;
                         break;
                     case GameState.Shuffling:
+                        Console.WriteLine("Lets begin!");
                         Console.WriteLine("Everyday I'm shuffling");
                         deck.Shuffle();
+                        Console.ReadLine();
                         currentGameState = GameState.Dealing;
                         break;
                     case GameState.Dealing:
                         Console.WriteLine("Top deals, being dealt...");
                         dealer.DealCardsToPlayer(deck.DealAmount(BlackJackDeal));
                         player.DealCardsToPlayer(deck.DealAmount(BlackJackDeal));
+                        Console.ReadLine();
                         currentGameState = GameState.Starting;
                         break;
                     case GameState.Starting:
@@ -112,9 +115,19 @@ namespace KittenMafiaBlackJack
                 {
                     case "a":
                         
-                    default:
+                        break;
+
+                    case "b":
+
                         break;
                 }
+            }
+
+            if (containsKitten)
+            {
+                Console.WriteLine("THERE'S A KITTEN IN YOUR HAND!");
+                Console.WriteLine("***Kitten is scared, and runs away with your cards stuck to it***");
+                player.Hand.Clear();
             }
         }
         private void ReadPlayerTurn()
@@ -139,11 +152,18 @@ namespace KittenMafiaBlackJack
         }
         private void ProcessDealersTurn()
         {
-            if (dealer.HandCount() < 17)
+            while (dealer.HandCount() < 21)
             {
-                Console.WriteLine("dealer hits!");
-                dealer.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
-                ProcessDealersTurn();
+                if (dealer.HandCount() < 17)
+                {
+                    Console.WriteLine("dealer hits!");
+                    dealer.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
+                    ProcessDealersTurn();
+                }
+                if (dealer.HandCount() > 21)
+                {
+                    CompareHands();
+                }
             }
         }
         private void ProcessHit()
@@ -152,15 +172,16 @@ namespace KittenMafiaBlackJack
             checkForSpecial();
             Console.WriteLine($"\n{player.Name} you have {player.HandCount()}");
             Console.WriteLine(player.HandToString());
-            if (player.HandCount() > 21)
-            {
-                GameOver();
-                currentGameState = GameState.Ending;
-            }
-            else if (player.HandCount() < 21)
+
+            if (player.HandCount() < 21)
             {
                 Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
                 ReadPlayerTurn();
+            }
+            else if (player.HandCount() > 21)
+            {
+                GameOver();
+                currentGameState = GameState.Ending;
             }
         }
         private string GameOver()
@@ -183,7 +204,7 @@ namespace KittenMafiaBlackJack
         private string CompareHands()
         {
             var retMsg = "";
-            if (dealer.HandCount() > player.HandCount())
+            if (dealer.HandCount() > player.HandCount() && dealer.HandCount() < 21)
             {
                 retMsg = $"\n{player.Name} you have {player.HandToString()}"
                             + $"\n{player.HandCount()}"
@@ -192,7 +213,7 @@ namespace KittenMafiaBlackJack
                             + $"\nYou lose {player.Name}"
                             + "Try Again? [Y]es, [N]o";
             }
-            else if (player.HandCount() > dealer.HandCount())
+            else if (player.HandCount() > dealer.HandCount() || dealer.HandCount() > 21)
             {
                 retMsg = $"\n{player.Name} you have {player.HandToString()}"
                             + $"\n{player.HandCount()}"
