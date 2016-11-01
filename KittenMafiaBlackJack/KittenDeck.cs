@@ -41,6 +41,7 @@ namespace KittenMafiaBlackJack
         {
             ResetDeck();
         }
+
         public void ResetDeck()
         {
             Deck = new List<Card>();    // new list initiated
@@ -63,6 +64,7 @@ namespace KittenMafiaBlackJack
                 }
             }
         }
+
         public void Shuffle(int shuffleCounter = 5000)
         {
             Random rcg = new Random();
@@ -79,6 +81,7 @@ namespace KittenMafiaBlackJack
                 }
             }
         }
+
         public Card[] DealAmount(int cardCount)      // Returns a Card
         {
             // Currently this method does not perform any validation. 
@@ -87,6 +90,19 @@ namespace KittenMafiaBlackJack
             Deck.RemoveRange(0, cardCount);
 
             return cards;
+        }
+    }
+
+    public class BlackJackDeck : KittenDeck
+    {
+        public int[] GetCardValue(Card card)
+        {
+            var cardVal = (int)card.Val + 1;
+            return cardVal > 10
+                ? new[] { 10 }
+                : cardVal == 1
+                    ? new[] { 1, 11 }
+                    : new[] { cardVal };
         }
     }
 }

@@ -7,7 +7,7 @@ namespace BlackJack_Tests
     public class DeckTests
     {
         [TestMethod]
-        public void ShuffleTest()
+        public void ShuffleTest()               // checks if cards in both decks match when shuffled (80%)
         {
             var TestDeck1 = new KittenDeck();
             var TestDeck2 = new KittenDeck();
@@ -19,7 +19,7 @@ namespace BlackJack_Tests
 
             for (int i = 0; i < TestDeck1.Deck.Count; i++)
             {
-                if (TestDeck1.Deck[i].Suit == TestDeck2.Deck[i].Suit && TestDeck1.Deck[i].Val == TestDeck2.Deck[i].Val)
+                if (TestDeck1.Deck[i].Suit == TestDeck2.Deck[i].Suit && TestDeck1.Deck[i].Val == TestDeck2.Deck[i].Val) 
                 {
                     matches++;
                 }
@@ -27,7 +27,8 @@ namespace BlackJack_Tests
 
             Assert.IsTrue(matches < TestDeck1.Deck.Count * 0.8, "Decks do not differ and shuffle may need to be revamped");
         }
-        public void ResetShuffleTest()
+
+        public void ResetShuffleTest()              // shuffles to hand 1, resets deck, shuffles to hand two, compares... (80%)
         {
             var testDeck1 = new KittenDeck();
             var hand1 = new BlackJackPlayer();

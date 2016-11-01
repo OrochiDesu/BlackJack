@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
 
 namespace KittenMafiaBlackJack
 {
@@ -22,7 +20,7 @@ namespace KittenMafiaBlackJack
         const int BlackJackHit = 1;                                         // hit for one card
 
         KittenDeck deck;
-        Player player;
+        BlackJackPlayer player;
         BlackJackDealer dealer;
         GameState currentGameState;
 
@@ -43,7 +41,7 @@ namespace KittenMafiaBlackJack
                 {
                     case GameState.Initiate:
                         Console.WriteLine("\nPlease enter your name");
-                        SetPlayerName();
+                        player.SetPlayerName();
                         Console.WriteLine($"{player.Name} I'm ready to play Kitten BlackJack! \nPlease press the return key...");
                         Console.ReadLine();
                         currentGameState = GameState.Shuffling;
@@ -85,57 +83,14 @@ namespace KittenMafiaBlackJack
             }
         }
 
-        private bool SetPlayerName()
-        {
-            player.Name = Console.ReadLine().ToLower();
-            if (player.Name == "ash")
-            {
-                RunPkmn();
-                Program.Exit();
-            }
-                return !string.IsNullOrEmpty(player.Name);
-        }
-        private void RunPkmn()
-        {
-            Console.WriteLine("oh really? lets play pokemon");
-            Process.Start("http://emulator.online/gameboy/pokemon-red-version/");
-        }
         private void StartGame()
         {
             Console.WriteLine($"{player.Name} you currently have:\n{player.HandToString()}\nDealer Has {dealer.PreviewHand()}\n{player.Name} would you like to [H]it or [S]tick?");
         }
-        private void checkForSpecial()
-        {
-            bool containsAce = player.Hand.Any(Card => Card.Val == CardVal.Ace);
-            bool containsKitten = player.Hand.Any(Card => Card.Val == CardVal.Kitten);
 
-            if (containsAce)
-            {
-                Console.WriteLine($"\n{player.Name} would you like your ace to be [a]-1 or [b]-11");
-                var decision = GetInputString();
-
-                switch (decision)
-                {
-                    case "a":
-                        
-                        break;
-
-                    case "b":
-
-                        break;
-                }
-            }
-
-            if (containsKitten)
-            {
-                Console.WriteLine("\n\nTHERE'S A KITTEN IN YOUR HAND!");
-                Console.WriteLine("***Kitten is scared, and runs away with your cards stuck to it***");
-                player.Hand.Clear();
-            }
-        }
         private void ReadPlayerTurn()
         {
-            switch (GetInputString())
+            switch (KittenTools.GetInputString())
             {
                 case "H":
                     ProcessHit();
@@ -145,37 +100,11 @@ namespace KittenMafiaBlackJack
                     break;
             }
         }
-        private string ProcessStick()
-        {
-            return $"{player.Name} you currently have: {player.HandToString()}"
-                + $"{player.HandCount()}"
-                + "\n\n***DEALERS TURN***";
-        }
-        public string GetInputString()
-        {
-            var choice = Console.ReadKey();
 
-            return choice != null
-                ? choice.Key.ToString().ToUpper()
-                : null;
-        }
-        private void ProcessDealersTurn()
-        {
-            if (dealer.HandCount() < 17)
-            {
-                Console.WriteLine($"\nDealer has {dealer.HandCount()}");
-                Console.WriteLine(dealer.HandToString());
-                Console.WriteLine("Dealer hits!, Press Enter...");
-                Console.ReadLine();
-                dealer.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
-            }
-            if (dealer.HandCount() > 21)
-                CompareHands();
-        }
         private void ProcessHit()
         {
             player.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
-            checkForSpecial();
+            player.checkForSpecial();
             Console.WriteLine($"\n{player.Name} you have {player.HandCount()}");
             Console.WriteLine(player.HandToString());
 
@@ -192,35 +121,34 @@ namespace KittenMafiaBlackJack
             {
                 currentGameState = GameState.Ending;
             }
-            else if (GetInputString() == "s" && player.HandCount() < dealer.GetFaceVal(dealer.Hand[0]))             // hope this works =s (choosing stick when your hand is less than the dealers preview)
+            else if (KittenTools.GetInputString() == "s" && player.HandCount() < dealer.GetFaceVal(dealer.Hand[0]))             // hope this works =s (choosing stick when your hand is less than the dealers preview)
                 currentGameState = GameState.Ending;
         }
-        private string CompareHands()
+
+        private string ProcessStick()
         {
-            var retMsg = "";
-            if (dealer.HandCount() > player.HandCount() && dealer.HandCount() < 21 || player.HandCount() > 21)
-            {
-                retMsg = $"\n{player.Name} you have {player.HandToString()}"
-                            + $"\n{player.HandCount()}"
-                            + $"\n\nDealer has {dealer.HandToString()}"
-                            + $"\n{dealer.HandCount()}"
-                            + $"\nYou lose {player.Name}"
-                            + "\n\nTry Again? [Y]es, [N]o";
-            }
-            else if (player.HandCount() > dealer.HandCount() || dealer.HandCount() > 21 || player.HandCount() == 21)
-            {
-                retMsg = $"\n{player.Name} you have {player.HandToString()}"
-                            + $"\n{player.HandCount()}"
-                            + $"\n\nDealer has {dealer.HandToString()}"
-                            + $"\n{dealer.HandCount()}"
-                            + $"\nYou win {player.Name}!"
-                            + "\n\nPlay Again? [Y]es, [N]o";
-            }
-            return retMsg;
+            return $"{player.Name} you currently have: {player.HandToString()}"
+                + $"{player.HandCount()}"
+                + "\n\n***DEALERS TURN***";
         }
+
+        private void ProcessDealersTurn()
+        {
+            if (dealer.HandCount() < 17)
+            {
+                Console.WriteLine($"\nDealer has {dealer.HandCount()}");
+                Console.WriteLine(dealer.HandToString());
+                Console.WriteLine("Dealer hits!, Press Enter...");
+                Console.ReadLine();
+                dealer.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
+            }
+            if (dealer.HandCount() > 21)
+                CompareHands();
+        }
+
         private void RestartGame()
         {
-            switch (GetInputString())
+            switch (KittenTools.GetInputString())
             {
                 case "Y":
                     deck.ResetDeck();
@@ -232,15 +160,6 @@ namespace KittenMafiaBlackJack
                     Program.Exit();
                     break;
             }
-        }
-        private int[] GetCardValue(Card card)
-        {
-            var cardVal = (int)card.Val + 1;
-            return cardVal > 10
-                ? new[] { 10 }
-                : cardVal == 1
-                    ? new[] { 1, 11 }
-                    : new[] { cardVal };
-        }
+        }        
     }
 }
