@@ -26,7 +26,7 @@ namespace KittenMafiaBlackJack
         King,
         Queen,
         Jack,
-        Kitten      //wildcard
+        Kitten                          //wildcard... cause its a cat
     }
     public class Card                   // what constitutes a card...
     {
@@ -91,18 +91,23 @@ namespace KittenMafiaBlackJack
 
             return cards;
         }
+
+        public virtual int[] GetCardValue(Card card)
+        {
+            return null;
+        }
     }
 
     public class BlackJackDeck : KittenDeck
     {
-        public int[] GetCardValue(Card card)
+        public override int[] GetCardValue(Card card)
         {
             var cardVal = (int)card.Val + 1;
             return cardVal > 10
                 ? new[] { 10 }
                 : cardVal == 1
                     ? new[] { 1, 11 }
-                    : new[] { cardVal };
+                    : new[] { cardVal };        // use as part of compare
         }
     }
 }

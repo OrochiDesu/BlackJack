@@ -1,36 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace KittenMafiaBlackJack
 {
     public enum GameState
     {
 
-        Initiate,   // should only announce Player/s and Dealer 
-        Shuffling,  // shuffles deck
-        Dealing,    // dealing cards to player/s and dealer
-        Starting,   // begin game
-        PlayersTurn,    // waiting for player/s turn to end
+        Initiate,                                                           // should only announce Player/s and Dealer 
+        Shuffling,                                                          // shuffles deck
+        Dealing,                                                            // dealing cards to player/s and dealer
+        Starting,                                                           // begin game
+        PlayersTurn,                                                        // waiting for player/s turn to end
         DealersTurn,
         Ending     
     }
 
     public class BlackJack
     {
-        const int BlackJackDeal = 2;                                        // only deal two cards for BlackJack
+        const int BlackJackDeal = 2;                                        // deal two cards for BlackJack
         const int BlackJackHit = 1;                                         // hit for one card
 
         KittenDeck deck;
-        BlackJackPlayer player;
-        BlackJackDealer dealer;
+
+        List<Player> players;                                               // keep a list of players
+        int humanPlayerIndex;
+        int dealerPlayerIndex;
         GameState currentGameState;
 
         public BlackJack()
         {
-            deck = new KittenDeck();
-            player = new BlackJackPlayer();
-            dealer = new BlackJackDealer();
-            currentGameState = GameState.Initiate;                          //gamestate will always begin at 'initiate'.
+            deck = new BlackJackDeck();
+            players = new List<Player> { new BlackJackPlayer(), new BlackJackDealer() };    // inits player and dealer into the list
+            humanPlayerIndex = 0;                                                           
+            dealerPlayerIndex = 1;                                                          // simple checks for "if" human or ai
+            currentGameState = GameState.Initiate;                          
             StartGameLoop();
+        }
+
+        private Player GetPlayer(bool isHuman)
+        {
+            return isHuman ? (BlackJackPlayer)players[humanPlayerIndex] : (BlackJackDealer)players[dealerPlayerIndex];                // if player "isHuman" == 0 / else == 1 bool for isHuman?(t/f) 
         }
 
         public void StartGameLoop()
@@ -41,8 +50,8 @@ namespace KittenMafiaBlackJack
                 {
                     case GameState.Initiate:
                         Console.WriteLine("\nPlease enter your name");
-                        player.SetPlayerName();
-                        Console.WriteLine($"{player.Name} I'm ready to play Kitten BlackJack! \nPlease press the return key...");
+                        GetPlayer(true).SetPlayerName();
+                        Console.WriteLine($"{GetPlayer(true).Name} I'm ready to play Kitten BlackJack! \nPlease press the return key...");
                         Console.ReadLine();
                         currentGameState = GameState.Shuffling;
                         break;
@@ -55,8 +64,8 @@ namespace KittenMafiaBlackJack
                         break;
                     case GameState.Dealing:
                         Console.WriteLine("Top deals, being dealt...");
-                        dealer.DealCardsToPlayer(deck.DealAmount(BlackJackDeal));
-                        player.DealCardsToPlayer(deck.DealAmount(BlackJackDeal));
+                        GetPlayer(false).DealCardsToPlayer(deck.DealAmount(BlackJackDeal));
+                        GetPlayer(true).DealCardsToPlayer(deck.DealAmount(BlackJackDeal));
                         Console.ReadLine();
                         currentGameState = GameState.Starting;
                         break;
@@ -65,18 +74,17 @@ namespace KittenMafiaBlackJack
                         currentGameState = GameState.PlayersTurn;
                         break;
                     case GameState.PlayersTurn:
-                        ReadPlayerTurn();
-                        if (player.HandCount() == 21)
+                        ReadPlayerTurn(GetPlayer(true));
+                        ProcessTurn();
+                        if (GetPlayer(true).HandCount() == 21)
                             currentGameState = GameState.Ending;
-                        else
-                            currentGameState = GameState.DealersTurn;
                         break;
                     case GameState.DealersTurn:
                         ProcessDealersTurn();
                         currentGameState = GameState.Ending;
                         break;
                     case GameState.Ending:
-                        Console.WriteLine(CompareHands());
+                        ShowHands();
                         RestartGame();
                         break;
                 }
@@ -85,24 +93,29 @@ namespace KittenMafiaBlackJack
 
         private void StartGame()
         {
+            var player = (BlackJackPlayer)GetPlayer(true);
+            var dealer = (BlackJackDealer)GetPlayer(false);
             Console.WriteLine($"{player.Name} you currently have:\n{player.HandToString()}\nDealer Has {dealer.PreviewHand()}\n{player.Name} would you like to [H]it or [S]tick?");
         }
 
-        private void ReadPlayerTurn()
+        private void ReadPlayerTurn(Player player)
         {
             switch (KittenTools.GetInputString())
             {
                 case "H":
-                    ProcessHit();
+                    ProcessTurn();
                     break;
                 case "S":
-                    Console.WriteLine(ProcessStick());
+                    ProcessTurn();
                     break;
             }
         }
 
-        private void ProcessHit()
+        private void ProcessTurn()
         {
+            var player = (BlackJackPlayer)GetPlayer(true);
+            var dealer = (BlackJackDealer)GetPlayer(false);
+
             player.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
             player.checkForSpecial();
             Console.WriteLine($"\n{player.Name} you have {player.HandCount()}");
@@ -111,7 +124,7 @@ namespace KittenMafiaBlackJack
             if (player.HandCount() < 21)
             {
                 Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
-                ReadPlayerTurn();
+                ReadPlayerTurn(player);
             }
             else if (player.HandCount() > 21)
             {
@@ -125,25 +138,28 @@ namespace KittenMafiaBlackJack
                 currentGameState = GameState.Ending;
         }
 
-        private string ProcessStick()
-        {
-            return $"{player.Name} you currently have: {player.HandToString()}"
-                + $"{player.HandCount()}"
-                + "\n\n***DEALERS TURN***";
-        }
-
         private void ProcessDealersTurn()
         {
-            if (dealer.HandCount() < 17)
+            if (GetPlayer(false).HandCount() < 17)
             {
-                Console.WriteLine($"\nDealer has {dealer.HandCount()}");
-                Console.WriteLine(dealer.HandToString());
+                Console.WriteLine($"\nDealer has {GetPlayer(false).HandCount()}");
+                Console.WriteLine(GetPlayer(false).HandToString());
                 Console.WriteLine("Dealer hits!, Press Enter...");
                 Console.ReadLine();
-                dealer.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
+                GetPlayer(false).DealCardsToPlayer(deck.DealAmount(BlackJackHit));
             }
-            if (dealer.HandCount() > 21)
-                CompareHands();
+            if (GetPlayer(false).HandCount() > 21)
+                ShowHands();
+        }
+
+        
+        public void ShowHands()
+        {
+            // need to utilise GetCardValue to compare both hands
+            foreach (Player player in players)
+            {
+
+            }
         }
 
         private void RestartGame()
@@ -152,8 +168,8 @@ namespace KittenMafiaBlackJack
             {
                 case "Y":
                     deck.ResetDeck();
-                    player.Hand.Clear();
-                    dealer.Hand.Clear();
+                    GetPlayer(true).Hand.Clear();
+                    GetPlayer(false).Hand.Clear();
                     currentGameState = GameState.Shuffling;
                     break;
                 case "N":

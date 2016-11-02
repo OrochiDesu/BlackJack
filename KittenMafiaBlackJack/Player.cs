@@ -15,6 +15,7 @@ namespace KittenMafiaBlackJack
         public abstract int GetFaceVal(Card card);
         public abstract string HandToString();
 
+
         public Player()
         {
             Hand = new List<Card>();                                        // new up the Hand
@@ -45,9 +46,6 @@ namespace KittenMafiaBlackJack
 
     public class BlackJackPlayer : Player
     {
-        public string winMsg = $"\nYou lose \n\nTry Again? [Y]es, [N]o";
-        public string loseMsg = $"\nYou win! \n\nPlay Again? [Y]es, [N]o";
-
         public override int HandCount()                             // moved handcount into blackjack player as faceval is blackjack specific
         {
             int handAmount = 0;
