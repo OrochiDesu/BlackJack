@@ -46,7 +46,7 @@ namespace KittenMafiaBlackJack
 
     public class BlackJackPlayer : Player
     {
-        public override int HandCount()                             // moved handcount into blackjack player as faceval is blackjack specific
+        public override int HandCount()                                         // moved handcount into blackjack player as faceval is blackjack specific
         {
             int handAmount = 0;
 
@@ -59,28 +59,27 @@ namespace KittenMafiaBlackJack
 
         public override int GetFaceVal(Card card)
         {
-            var cardVal = (int)card.Val + 1;                        // +1 to card value as it starts count @ 0
-            return cardVal > 10 ? 10 : cardVal;                     // if card value is over 10 in count it equals 10 (Jack, Queen, King) else its normal 
+            var cardVal = (int)card.Face + 1;                                   // +1 to card value as it starts count @ 0
+            return cardVal > 10 ? 10 : cardVal;                                 // if card value is over 10 in count it equals 10 (Jack, Queen, King) else its normal 
         }
 
         public override string HandToString()
         {
-            var ret = "";                                           // blank string var for +=
+            var ret = "";                                                       // blank string var for +=
             foreach (Card card in Hand)
             {
-                ret += $"{card.Val} of {card.Suit} :: {GetFaceVal(card)}\n";
+                ret += $"{card.Face} of {card.Suit} :: {GetFaceVal(card)}\n";
             }
             return ret;
         }
 
-        public void checkForSpecial()
+        public void checkForKitten()
         {
-            bool containsAce = Hand.Any(Card => Card.Val == CardVal.Ace);
-            bool containsKitten = Hand.Any(Card => Card.Val == CardVal.Kitten);
+            bool containsKitten = Hand.Any(Card => Card.Face == CardFace.Kitten);
 
             if (containsKitten)
             {
-                Console.WriteLine("\n\nTHERE'S A KITTEN IN YOUR HAND!");
+                Console.WriteLine($"{Name.ToUpper()} THERE'S A KITTEN IN YOUR HAND!");
                 Console.WriteLine("***Kitten is scared, and runs away with your cards stuck to it***");
                 Hand.Clear();
             }
@@ -91,10 +90,13 @@ namespace KittenMafiaBlackJack
     {
         public BlackJackDealer()
         {
+            const string name = "House";                                        // never going to change
+
+            Name = name;
         }
         public string PreviewHand()
         {
-            string retVal = Hand.First().Val.ToString();
+            string retVal = Hand.First().Face.ToString();
             string retSuit = Hand.First().Suit.ToString();
             var retAmount = GetFaceVal(Hand.First());
 
