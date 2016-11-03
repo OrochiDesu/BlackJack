@@ -121,7 +121,11 @@ namespace KittenMafiaBlackJack
             player.DealCardsToPlayer(deck.DealAmount(BlackJackHit));                
             player.checkForKitten();
 
+<<<<<<< HEAD
             Console.WriteLine($"\n{player.Name} you have { string.Join(" / ", GetPlayerHandTotal(player)) }");      // join takes all cards in hand and makes them string.
+=======
+            Console.WriteLine($"\n{player.Name} you have { string.Join(" / ", GetPlayerHandTotal(player)) }");
+>>>>>>> c68ee9016a92fb4932cd6d25d0eb7e3664b842e3
             Console.WriteLine(player.HandToString());
 
             if (player.HandCount() < 21)
@@ -133,7 +137,11 @@ namespace KittenMafiaBlackJack
                 currentGameState = GameState.Ending;
         }
 
+<<<<<<< HEAD
         private void ProcessDealersTurn()           // could move this into Process turn, maybe add dealer logic to with an 'if'
+=======
+        private void ProcessDealersTurn() // could move this into Process turn, maybe add dealer logic to with an 'if'
+>>>>>>> c68ee9016a92fb4932cd6d25d0eb7e3664b842e3
         {
             var dealer = (BlackJackDealer)GetPlayer(false);
 
