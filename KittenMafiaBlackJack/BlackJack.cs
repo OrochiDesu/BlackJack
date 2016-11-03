@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace KittenMafiaBlackJack
 {
@@ -39,7 +40,7 @@ namespace KittenMafiaBlackJack
 
         private Player GetPlayer(bool isHuman)
         {
-            return isHuman ? (BlackJackPlayer)players[humanPlayerIndex] : (BlackJackDealer)players[dealerPlayerIndex];                // if player "isHuman" == 0 / else == 1 bool for isHuman?(t/f) 
+            return isHuman ? players[humanPlayerIndex] : players[dealerPlayerIndex];        // if player "isHuman" == 0 / else == 1 bool for isHuman?(t/f) 
         }
 
         public void StartGameLoop()
@@ -116,9 +117,10 @@ namespace KittenMafiaBlackJack
             var player = (BlackJackPlayer)GetPlayer(true);
             var dealer = (BlackJackDealer)GetPlayer(false);
 
-            player.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
-            player.checkForSpecial();
-            Console.WriteLine($"\n{player.Name} you have {player.HandCount()}");
+            player.DealCardsToPlayer(deck.DealAmount(BlackJackHit));                
+            player.checkForKitten();
+
+            Console.WriteLine($"\n{player.Name} you have { string.Join(" / ", GetPlayerHandTotal(player)) }");
             Console.WriteLine(player.HandToString());
 
             if (player.HandCount() < 21)
@@ -126,19 +128,11 @@ namespace KittenMafiaBlackJack
                 Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
                 ReadPlayerTurn(player);
             }
-            else if (player.HandCount() > 21)
-            {
-                currentGameState = GameState.Ending;
-            }
-            else if (player.HandCount() == 21)
-            {
-                currentGameState = GameState.Ending;
-            }
-            else if (KittenTools.GetInputString() == "s" && player.HandCount() < dealer.GetFaceVal(dealer.Hand[0]))             // hope this works =s (choosing stick when your hand is less than the dealers preview)
+            else if (player.HandCount() > 21 || player.HandCount() == 21 || KittenTools.GetInputString() == "s" && player.HandCount() < dealer.GetFaceVal(dealer.Hand[0]))
                 currentGameState = GameState.Ending;
         }
 
-        private void ProcessDealersTurn()
+        private void ProcessDealersTurn()                       // could move this into Process turn, maybe add dealer logic to with an 'if'
         {
             if (GetPlayer(false).HandCount() < 17)
             {
@@ -152,6 +146,15 @@ namespace KittenMafiaBlackJack
                 ShowHands();
         }
 
+        private int[] GetPlayerHandTotal(Player player)
+        {
+            var firstTotals = player.Hand.Sum(x => x.CardValue[0]);
+
+            if (firstTotals + (11 - 1) > 21 || !player.Hand.Any(x => x.CardValue.Length > 1))
+                return new int[1] { firstTotals };
+
+            return new int[2] { firstTotals, firstTotals + 10 };
+        }
         
         public void ShowHands()
         {

@@ -4,7 +4,7 @@ namespace KittenMafiaBlackJack
 {
     public class KittenTools
     {
-        public static string GetInputString()
+        public static string GetInputString()               //static as its not going to do anything else and dont want to init Kittentools at anytime...
         {
             var choice = Console.ReadKey();
 

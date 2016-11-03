@@ -19,7 +19,7 @@ namespace BlackJack_Tests
 
             for (int i = 0; i < TestDeck1.Deck.Count; i++)
             {
-                if (TestDeck1.Deck[i].Suit == TestDeck2.Deck[i].Suit && TestDeck1.Deck[i].Val == TestDeck2.Deck[i].Val) 
+                if (TestDeck1.Deck[i].Suit == TestDeck2.Deck[i].Suit && TestDeck1.Deck[i].Face == TestDeck2.Deck[i].Face) 
                 {
                     matches++;
                 }
@@ -46,7 +46,7 @@ namespace BlackJack_Tests
 
             for (int i = 0; i < hand1.Hand.Count; i++)
             {
-                if (hand1.Hand[i].Suit == hand1.Hand[i].Suit && hand2.Hand[i].Val == hand1.Hand[i].Val)
+                if (hand1.Hand[i].Suit == hand1.Hand[i].Suit && hand2.Hand[i].Face == hand1.Hand[i].Face)
                 {
                     matches++;
                 }
