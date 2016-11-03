@@ -120,7 +120,6 @@ namespace KittenMafiaBlackJack
 
             player.DealCardsToPlayer(deck.DealAmount(BlackJackHit));                
             player.checkForKitten();
-
             Console.WriteLine($"\n{player.Name} you have { string.Join(" / ", GetPlayerHandTotal(player)) }");      // join takes all cards in hand and makes them string.
             Console.WriteLine(player.HandToString());
 
