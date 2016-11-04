@@ -9,7 +9,7 @@ namespace KittenMafiaBlackJack
             var choice = Console.ReadKey();
 
             return choice != null
-                ? choice.Key.ToString().ToUpper()
+                ? choice.Key.ToString().ToLower()
                 : null;
         }
     }

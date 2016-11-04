@@ -76,10 +76,6 @@ namespace KittenMafiaBlackJack
                         break;
                     case GameState.PlayersTurn:
                         ReadPlayerTurn(GetPlayer(true));
-                        ProcessTurn();
-                        if
-                        else
-                        break;
                         currentGameState = GameState.Ending;
                         break;
                     case GameState.Ending:
@@ -100,47 +96,27 @@ namespace KittenMafiaBlackJack
 
         private void ReadPlayerTurn(Player player)
         {
+            Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
+
             switch (KittenTools.GetInputString())
             {
-                case "H":
-                    ProcessTurn();
+                case "h":
+                    ProcessHit();
                     break;
-                case "S":
+                case "s":
                     ProcessStick();
                     break;
             }
         }
 
-        private void ProcessTurn()
+        private void ProcessHit(Player player)
         {
-            var player = (BlackJackPlayer)GetPlayer(true);
-            var dealer = (BlackJackDealer)GetPlayer(false);
-
-            Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
-            ReadPlayerTurn(player);
-
-            if (player.HandCount() > 21 || player.HandCount() == 21 || KittenTools.GetInputString() == "s" && player.HandCount() < dealer.GetFaceVal(dealer.Hand[0]) || dealer.HandCount() > 21)
-            {
-                currentGameState = GameState.Ending;
-            }
-            else if (player.HandCount() < 21 && )
-            {
-                
-            }
-
-            if (dealer.HandCount() < 17)
-            {
-                Console.WriteLine($"\nDealer has {dealer.HandCount()}");
-                Console.WriteLine(dealer.HandToString());
-                Console.WriteLine("Dealer hits!, Press Enter...");
-                Console.ReadLine();
-                dealer.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
-            }
+            
         }
 
-        private void ProcessStick()
+        private void ProcessStick(Player player)
         {
-            currentGameState = GameState.Ending;
+
         }
 
         private int[] GetPlayerHandTotal(Player player)
