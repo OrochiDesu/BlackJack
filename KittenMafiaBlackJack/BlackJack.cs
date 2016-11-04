@@ -77,11 +77,9 @@ namespace KittenMafiaBlackJack
                     case GameState.PlayersTurn:
                         ReadPlayerTurn(GetPlayer(true));
                         ProcessTurn();
-                        if (GetPlayer(true).HandCount() == 21)
-                            currentGameState = GameState.Ending;
+                        if
+                        else
                         break;
-                    case GameState.DealersTurn:
-                        ProcessDealersTurn();
                         currentGameState = GameState.Ending;
                         break;
                     case GameState.Ending:
@@ -108,7 +106,7 @@ namespace KittenMafiaBlackJack
                     ProcessTurn();
                     break;
                 case "S":
-                    ProcessTurn();
+                    ProcessStick();
                     break;
             }
         }
@@ -118,24 +116,17 @@ namespace KittenMafiaBlackJack
             var player = (BlackJackPlayer)GetPlayer(true);
             var dealer = (BlackJackDealer)GetPlayer(false);
 
-            player.DealCardsToPlayer(deck.DealAmount(BlackJackHit));                
-            player.checkForKitten();
+            Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
+            ReadPlayerTurn(player);
 
-            Console.WriteLine($"\n{player.Name} you have { string.Join(" / ", GetPlayerHandTotal(player)) }");      // join takes all cards in hand and makes them string.
-            Console.WriteLine(player.HandToString());
-
-            if (player.HandCount() < 21)
+            if (player.HandCount() > 21 || player.HandCount() == 21 || KittenTools.GetInputString() == "s" && player.HandCount() < dealer.GetFaceVal(dealer.Hand[0]) || dealer.HandCount() > 21)
             {
-                Console.WriteLine($"\n{player.Name} would you like to [H]it or [S]tick");
-                ReadPlayerTurn(player);
-            }
-            else if (player.HandCount() > 21 || player.HandCount() == 21 || KittenTools.GetInputString() == "s" && player.HandCount() < dealer.GetFaceVal(dealer.Hand[0]))
                 currentGameState = GameState.Ending;
-        }
-
-        private void ProcessDealersTurn()           // could move this into Process turn, maybe add dealer logic to with an 'if'
-        {
-            var dealer = (BlackJackDealer)GetPlayer(false);
+            }
+            else if (player.HandCount() < 21 && )
+            {
+                
+            }
 
             if (dealer.HandCount() < 17)
             {
@@ -145,8 +136,11 @@ namespace KittenMafiaBlackJack
                 Console.ReadLine();
                 dealer.DealCardsToPlayer(deck.DealAmount(BlackJackHit));
             }
-            if (dealer.HandCount() > 21)
-                ShowHands();
+        }
+
+        private void ProcessStick()
+        {
+            currentGameState = GameState.Ending;
         }
 
         private int[] GetPlayerHandTotal(Player player)
