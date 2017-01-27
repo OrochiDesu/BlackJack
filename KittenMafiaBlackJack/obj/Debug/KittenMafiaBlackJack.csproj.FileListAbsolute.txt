@@ -10,3 +10,7 @@ C:\Users\ashley.henry\Documents\BlackJack\KittenMafiaBlackJack\bin\Debug\KittenM
 C:\Users\ashley.henry\Documents\BlackJack\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.csprojResolveAssemblyReference.cache
 C:\Users\ashley.henry\Documents\BlackJack\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.exe
 C:\Users\ashley.henry\Documents\BlackJack\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.pdb
+C:\Users\ashley.henry\Desktop\PersonalGit\Cards\KittenMafiaBlackJack\bin\Debug\KittenMafiaBlackJack.exe.config
+C:\Users\ashley.henry\Desktop\PersonalGit\Cards\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.exe
+C:\Users\ashley.henry\Desktop\PersonalGit\Cards\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.pdb
+C:\Users\ashley.henry\Desktop\PersonalGit\Cards\KittenMafiaBlackJack\obj\Debug\KittenMafiaBlackJack.csprojResolveAssemblyReference.cache
