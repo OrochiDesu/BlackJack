@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KittenMafiaBlackJack", "KittenMafiaBlackJack\KittenMafiaBlackJack.csproj", "{DB718B4B-7341-4F46-B165-CF01E4273330}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack_Tests", "BlackJack_Tests\BlackJack_Tests.csproj", "{6A70D201-764C-4DFB-ABAA-6A400B1FF9B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards_Tests", "BlackJack_Tests\Cards_Tests.csproj", "{6A70D201-764C-4DFB-ABAA-6A400B1FF9B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards", "Cards\Cards.csproj", "{2A2629F2-60D1-4F83-A49A-291494093A31}"
 EndProject
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DB718B4B-7341-4F46-B165-CF01E4273330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB718B4B-7341-4F46-B165-CF01E4273330}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB718B4B-7341-4F46-B165-CF01E4273330}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB718B4B-7341-4F46-B165-CF01E4273330}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6A70D201-764C-4DFB-ABAA-6A400B1FF9B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6A70D201-764C-4DFB-ABAA-6A400B1FF9B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A70D201-764C-4DFB-ABAA-6A400B1FF9B9}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -4,7 +4,7 @@ using Cards.Objects;
 
 namespace Cards
 {
-    internal class Deck
+    public class Deck
     {
         private readonly CardDeck _cardDeck = new CardDeck {Deck = new List<Card>()};
         public Deck()

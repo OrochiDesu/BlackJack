@@ -6,8 +6,8 @@
     <ProjectGuid>{6A70D201-764C-4DFB-ABAA-6A400B1FF9B9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BlackJack_Tests</RootNamespace>
-    <AssemblyName>BlackJack_Tests</AssemblyName>
+    <RootNamespace>Cards_Tests</RootNamespace>
+    <AssemblyName>Cards_Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -50,13 +50,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DeckTests.cs" />
+    <Compile Include="Card_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KittenMafiaBlackJack\KittenMafiaBlackJack.csproj">
-      <Project>{db718b4b-7341-4f46-b165-cf01e4273330}</Project>
-      <Name>KittenMafiaBlackJack</Name>
+    <ProjectReference Include="..\Cards\Cards.csproj">
+      <Project>{2a2629f2-60d1-4f83-a49a-291494093a31}</Project>
+      <Name>Cards</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
