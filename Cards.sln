@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards_Tests", "BlackJack_Tests\Cards_Tests.csproj", "{6A70D201-764C-4DFB-ABAA-6A400B1FF9B9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards", "Cards\Cards.csproj", "{2A2629F2-60D1-4F83-A49A-291494093A31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardsTests", "CardsTests\CardsTests.csproj", "{9CFEEB68-82AC-4EF8-A538-1481F986D767}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6A70D201-764C-4DFB-ABAA-6A400B1FF9B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A70D201-764C-4DFB-ABAA-6A400B1FF9B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A70D201-764C-4DFB-ABAA-6A400B1FF9B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A70D201-764C-4DFB-ABAA-6A400B1FF9B9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2A2629F2-60D1-4F83-A49A-291494093A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2A2629F2-60D1-4F83-A49A-291494093A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A2629F2-60D1-4F83-A49A-291494093A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A2629F2-60D1-4F83-A49A-291494093A31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CFEEB68-82AC-4EF8-A538-1481F986D767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CFEEB68-82AC-4EF8-A538-1481F986D767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CFEEB68-82AC-4EF8-A538-1481F986D767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CFEEB68-82AC-4EF8-A538-1481F986D767}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
