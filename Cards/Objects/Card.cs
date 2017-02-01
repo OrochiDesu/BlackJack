@@ -1,9 +1,10 @@
-﻿using System;
-
-namespace Cards.Objects
+﻿namespace Cards.Objects
 {
     public class Card
     {
+        public CardSuit Suit;
+        public CardFace Face;
+
         public enum CardSuit
         {
             Diamonds,
@@ -28,12 +29,5 @@ namespace Cards.Objects
             Queen,
             King
         }
-
-        public Card()
-        {
-            CardSuit suit;
-            CardFace face;
-        }
-
     }
 }

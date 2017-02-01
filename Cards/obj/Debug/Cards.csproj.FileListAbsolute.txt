@@ -1,0 +1,5 @@
+C:\Users\ashley.henry\Desktop\PersonalGit\Cards\Cards\bin\Debug\Cards.dll
+C:\Users\ashley.henry\Desktop\PersonalGit\Cards\Cards\bin\Debug\Cards.pdb
+C:\Users\ashley.henry\Desktop\PersonalGit\Cards\Cards\obj\Debug\Cards.csprojResolveAssemblyReference.cache
+C:\Users\ashley.henry\Desktop\PersonalGit\Cards\Cards\obj\Debug\Cards.dll
+C:\Users\ashley.henry\Desktop\PersonalGit\Cards\Cards\obj\Debug\Cards.pdb

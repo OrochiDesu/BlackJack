@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Deck.cs" />
     <Compile Include="Objects\Card.cs" />
     <Compile Include="Objects\CardDeck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

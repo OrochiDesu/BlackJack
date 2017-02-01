@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Cards.Objects
 {
-    class CardDeck
+    public class CardDeck
     {
-        public List<Card> Deck;
+        public List<Card> Deck { get; set; }
     }
 }
