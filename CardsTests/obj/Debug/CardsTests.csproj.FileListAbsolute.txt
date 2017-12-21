@@ -1,0 +1,9 @@
+C:\supergit\Cards\CardsTests\bin\Debug\CardsTests.dll
+C:\supergit\Cards\CardsTests\bin\Debug\CardsTests.pdb
+C:\supergit\Cards\CardsTests\bin\Debug\Cards.dll
+C:\supergit\Cards\CardsTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\supergit\Cards\CardsTests\bin\Debug\Cards.pdb
+C:\supergit\Cards\CardsTests\obj\Debug\CardsTests.csprojResolveAssemblyReference.cache
+C:\supergit\Cards\CardsTests\obj\Debug\CardsTests.csproj.CoreCompileInputs.cache
+C:\supergit\Cards\CardsTests\obj\Debug\CardsTests.dll
+C:\supergit\Cards\CardsTests\obj\Debug\CardsTests.pdb

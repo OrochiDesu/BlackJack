@@ -3,3 +3,9 @@ C:\Users\ashley.henry\Desktop\PersonalGit\Cards\Cards\bin\Debug\Cards.pdb
 C:\Users\ashley.henry\Desktop\PersonalGit\Cards\Cards\obj\Debug\Cards.csprojResolveAssemblyReference.cache
 C:\Users\ashley.henry\Desktop\PersonalGit\Cards\Cards\obj\Debug\Cards.dll
 C:\Users\ashley.henry\Desktop\PersonalGit\Cards\Cards\obj\Debug\Cards.pdb
+C:\supergit\Cards\Cards\bin\Debug\Cards.dll
+C:\supergit\Cards\Cards\bin\Debug\Cards.pdb
+C:\supergit\Cards\Cards\obj\Debug\Cards.csprojResolveAssemblyReference.cache
+C:\supergit\Cards\Cards\obj\Debug\Cards.csproj.CoreCompileInputs.cache
+C:\supergit\Cards\Cards\obj\Debug\Cards.dll
+C:\supergit\Cards\Cards\obj\Debug\Cards.pdb

@@ -4,6 +4,13 @@ namespace Cards.Objects
 {
     public class CardDeck
     {
-        public List<Card> Deck { get; set; }
+        // may need to use to implement game mechanics
+        private readonly List<Card> _systemDeck;
+        public List<Card> Deck = new List<Card>();
+
+        public CardDeck()
+        {
+            _systemDeck = Deck;
+        }
     }
 }

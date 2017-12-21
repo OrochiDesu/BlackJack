@@ -1,15 +1,20 @@
-﻿using System;
+﻿using Cards.Objects;
+using System;
 using System.Collections.Generic;
-using Cards.Objects;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Cards
 {
-    public class Deck
+    public class Cards
     {
-        private readonly CardDeck _cardDeck = new CardDeck {Deck = new List<Card>()};
-        public Deck()
+        private CardDeck _cardDeck = new CardDeck();
+        public List<Card> Deck;
+
+        public Cards()
         {
-            ResetDeck();
+            Deck = _cardDeck.Deck;
         }
 
         public void ResetDeck()
@@ -19,14 +24,14 @@ namespace Cards
 
             for (var i = 0; i < intSuit; i++)
             {
-                for (var j = 0; j < intFace; j++)
+                for (var o = 0; o < intFace; o++)
                 {
                     var card = new Card()
                     {
                         Suit = (Card.CardSuit)i,
-                        Face = (Card.CardFace)j
+                        Face = (Card.CardFace)o
                     };
-                    _cardDeck.Deck.Add(card);
+                    Deck.Add(card);
                 }
             }
         }
@@ -37,13 +42,13 @@ namespace Cards
 
             for (var i = 0; i < shuffleCount; i++)
             {
-                for (var card = 0; card < _cardDeck.Deck.Count; card++)
+                for (var card = 0; card < Deck.Count; card++)
                 {
-                    var randomCard = rcg.Next(_cardDeck.Deck.Count);
+                    var randomCard = rcg.Next(Deck.Count);
 
-                    var topCard = _cardDeck.Deck[randomCard];
-                    _cardDeck.Deck[randomCard] = _cardDeck.Deck[card];
-                    _cardDeck.Deck[card] = topCard;
+                    var topCard = Deck[randomCard];
+                    Deck[randomCard] = Deck[card];
+                    Deck[card] = topCard;
                 }
             }
         }

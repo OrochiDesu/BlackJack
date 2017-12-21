@@ -5,12 +5,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cards.Objects;
 
 namespace Cards.Tests
 {
     [TestClass()]
     public class DeckTests
     {
+        [TestMethod()]
+        public void DeckCount()
+        {
+            Cards cards = new Cards();
+            // if deck is not building 52 cards
+
+            cards.ResetDeck();
+            // should have 52 cards in cards.Deck
+
+            if (cards.Deck.Count() < 52)
+                Assert.Fail();
+        }
+
         [TestMethod()]
         public void DeckTest()
         {
