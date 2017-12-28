@@ -1,11 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Cards;
+﻿using Cards.Objects;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Cards.Objects;
 
 namespace Cards.Tests
 {
@@ -16,11 +12,10 @@ namespace Cards.Tests
         public void DeckCount()
         {
             Cards cards = new Cards();
-            // if deck is not building 52 cards
 
             cards.ResetDeck();
-            // should have 52 cards in cards.Deck
-
+            
+            // if deck is not building 52 cards
             if (cards.Deck.Count() < 52)
                 Assert.Fail();
         }
@@ -28,22 +23,54 @@ namespace Cards.Tests
         [TestMethod()]
         public void DeckTest()
         {
-            // if cards are not built back to original structure on first deck call
+            Cards cards = new Cards();
+
+            cards.ResetDeck();
+
+            // if cards are not in order on first deck call
+            if (cards.Deck[0].Face != Card.CardFace.Ace && cards.Deck[0].Suit != Card.CardSuit.Diamonds)
             Assert.Fail();
         }
 
         [TestMethod()]
         public void ResetDeckTest()
         {
+            Cards cards = new Cards();
+
+            cards.Shuffle(2);
+
+            cards.ResetDeck();
+            cards.Deck.ToArray();
+
             // if deck doesnt reset to original structure on calling ResetDeck
-            Assert.Fail();
+            if (cards.Deck[0].Face != Card.CardFace.Ace && cards.Deck[0].Suit != Card.CardSuit.Diamonds)
+                Assert.Fail();
+            if (cards.Deck[14].Face != Card.CardFace.Ace && cards.Deck[14].Suit != Card.CardSuit.Spades)
+                Assert.Fail();
+            if (cards.Deck[27].Face != Card.CardFace.Ace && cards.Deck[27].Suit != Card.CardSuit.Hearts)
+                Assert.Fail();
+            if (cards.Deck[40].Face != Card.CardFace.Ace && cards.Deck[40].Suit != Card.CardSuit.Clubs)
+                Assert.Fail();
         }
 
         [TestMethod()]
         public void ShuffleTest()
         {
+            Random rng = new Random();
+            var randomNo = rng.Next(51);
+
+            Cards cards = new Cards();
+            Cards pllCards = new Cards();
+
+            pllCards.ResetDeck();
+            cards.ResetDeck();
+
+            pllCards.Shuffle(1);
+            cards.Shuffle(1);
+
             // if deck doesnt shuffle && differ from another shuffled simultaneously
-            Assert.Fail();
+            if (cards.Deck[randomNo] == pllCards.Deck[randomNo])
+                Assert.Fail();
         }
     }
 }
